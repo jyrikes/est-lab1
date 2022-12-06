@@ -72,7 +72,7 @@ public class ListaArray implements EstruturaDeDados{
 
     @Override
     public int sucessor(int chave) {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
@@ -81,17 +81,21 @@ public class ListaArray implements EstruturaDeDados{
         // TODO Auto-generated method stub
         return 0;
     }
-    
+    public void mostrarListaArray(){
+        for(int i = 0 ; i < this.index ; i++){
+            System.out.println(this.elementos[i]);
+        }
+    }
 
     public static void main(String[] args) {
         ListaArray r = new ListaArray(2);
         boolean a = r.insert(10);
         boolean b = r.insert(20);
-        boolean c =r.delete(20);
+        boolean c =r.delete(10);
         
         //System.out.println(r.search(20));
-        //System.out.println(b);
-        System.out.println(r.elementos[0]);
+        System.out.println(c);
+        r.mostrarListaArray();
     }
    
 
