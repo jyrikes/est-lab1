@@ -3,12 +3,17 @@ public class ListaArray implements EstruturaDeDados{
     private int tamanho;
     private int index;
     private int posBusca;
+    private int max;
+    private int min;
 
     public ListaArray(int tamanho) {
         this.tamanho = tamanho;
         this.elementos = new int[tamanho];
         this.index = 0;
         this.posBusca = 0;
+        this.max = 0 ;
+        this.min = 0;
+      
     }
 
     @Override
@@ -16,6 +21,17 @@ public class ListaArray implements EstruturaDeDados{
 
         if(this.index < this.tamanho){
             this.elementos[index] = chave;
+            if(index == 0){
+                this.min = chave;
+            }
+            if(this.max < chave){
+                this.max = chave;
+            }
+
+            if(this.min > chave){
+                this.min = chave;
+            }
+
             this.index = index + 1;
             return true;
         }
@@ -61,25 +77,32 @@ public class ListaArray implements EstruturaDeDados{
     @Override
     public int minimum() {
         
-        return 0;
+        return this.min;
     }
 
     @Override
     public int maximum() {
-        // TODO Auto-generated method stub
-        return 0;
+
+        return this.max;
     }
 
     @Override
     public int sucessor(int chave) {
-        
+        if(this.search(chave) && this.posBusca < this.index){
+            return this.elementos[this.posBusca +1];
+
+        }
         return 0;
     }
 
     @Override
     public int prodessor(int chave) {
-        // TODO Auto-generated method stub
+        if(this.search(chave) && this.posBusca < this.index){
+            return this.elementos[this.posBusca -1];
+
+        }
         return 0;
+       
     }
     public void mostrarListaArray(){
         for(int i = 0 ; i < this.index ; i++){
@@ -88,14 +111,16 @@ public class ListaArray implements EstruturaDeDados{
     }
 
     public static void main(String[] args) {
-        ListaArray r = new ListaArray(2);
+        ListaArray r = new ListaArray(3);
         boolean a = r.insert(10);
-        boolean b = r.insert(20);
-        boolean c =r.delete(10);
+        boolean b = r.insert(-20);
+        boolean d =r.insert(30);
         
         //System.out.println(r.search(20));
-        System.out.println(c);
-        r.mostrarListaArray();
+        System.out.println(r.sucessor(10));
+        System.out.println(r.maximum());
+        System.out.println(r.minimum());
+        //r.mostrarListaArray();
     }
    
 
