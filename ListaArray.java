@@ -1,3 +1,5 @@
+import java.nio.channels.InterruptibleChannel;
+
 public class ListaArray implements EstruturaDeDados{
     private int[] elementos ;
     private int tamanho;
@@ -43,21 +45,57 @@ public class ListaArray implements EstruturaDeDados{
 
     @Override
     public boolean delete(int chave) {
+        
         if(this.search(chave)){
+            int indiceBusca = this.posBusca;
+            // System.out.println(indiceBusca);
+            int i =this.tamanho -1;
             
-            for(int i = this.tamanho-1 ; i > 0; i--){
-                    
-                    this.elementos[i-1] = this.elementos[i];
+            while( i > indiceBusca){
+                int correcao = ((this.tamanho-1) - (i-indiceBusca));
                 
+                if(this.tamanho -1 == i){
+                    correcao = 0;   
+                    
+                }
+                else{
+                    correcao = correcao -1;
+                }
+                int aux = indiceBusca +1;
+                this.elementos[indiceBusca + correcao] = this.elementos[aux+correcao];
+                
+                //System.out.println( correcao);
+
+
+            
+
+                i--;
+               
+
             }
             this.index --;
+            this.tamanho --;
+            this.atl_min_max();
+           
+
+                  if(chave == this.max || chave == this.min){
+                    for(int j = 0; j < this.index; j++ ){
+                        if(this.max < this.elementos[j]){
+                            this.max = this.elementos[j];
+                        }
+                        if(this.min > this.elementos[j]){
+                            this.min = this.elementos[j];
+                        }
+                    }
+
+                  }
+           
+            
+            
             return true;
         }
         else{
-
-
-            return false;
-
+           return false;
         }
         
         
@@ -66,8 +104,15 @@ public class ListaArray implements EstruturaDeDados{
     @Override
     public boolean search(int chave) {
         for(int i = 0; i < this.index; i++ ){
+            if(this.max < this.elementos[i]){
+                this.max = this.elementos[i];
+            }
+            if(this.min > this.elementos[i]){
+                this.min = this.elementos[i];
+            }
             if(chave == this.elementos[i]){
                 this.posBusca = i;
+
                 return true;
             }
         }
@@ -84,6 +129,18 @@ public class ListaArray implements EstruturaDeDados{
     public int maximum() {
 
         return this.max;
+    }
+    private void atl_min_max(){
+        this.max = Integer.MIN_VALUE;
+        this.min = Integer.MAX_VALUE;
+        for(int i =0 ; i <this.index; i++){
+            if(this.max < this.elementos[i]){
+                this.max = this.elementos[i];
+            }
+            if(this.min > this.elementos[i]){
+                this.min= this.elementos[i];
+            }
+        }
     }
 
     @Override
@@ -106,21 +163,35 @@ public class ListaArray implements EstruturaDeDados{
     }
     public void mostrarListaArray(){
         for(int i = 0 ; i < this.index ; i++){
-            System.out.println(this.elementos[i]);
+            System.out.print(this.elementos[i]);
         }
     }
 
     public static void main(String[] args) {
-        ListaArray r = new ListaArray(3);
-        boolean a = r.insert(10);
-        boolean b = r.insert(-20);
-        boolean d =r.insert(30);
+        ListaArray r = new ListaArray(8);
+        boolean a = r.insert(1);
+        boolean b = r.insert(2);
+        boolean d =r.insert(3);
+        boolean e =r.insert(4);
+        boolean f =r.insert(5);
+        boolean g =r.insert(6);
+        boolean h =r.insert(7);
+        boolean j =r.insert(8);
+        r.mostrarListaArray();
+        System.out.println(r.max);
+        r.delete(8);
+        r.delete(8);
+
         
         //System.out.println(r.search(20));
-        System.out.println(r.sucessor(10));
-        System.out.println(r.maximum());
-        System.out.println(r.minimum());
-        //r.mostrarListaArray();
+        System.out.println("\n");
+         r.mostrarListaArray();
+        // System.out.println(r.tamanho);
+        System.out.println("\n");
+         System.out.println(r.max);
+         r.delete(1);
+         System.out.println("\n");
+         System.out.println(r.min);
     }
    
 
